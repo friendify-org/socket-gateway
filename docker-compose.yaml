@@ -1,0 +1,45 @@
+version: '3.1'
+
+services:
+
+  socket-gateway:
+    build: .
+    container_name: socket-gateway
+    environment:
+      - NODE_ENV=${NODE_ENV}
+    ports:
+      - 3000:3000
+    volumes:
+      - ./src:/usr/app/src
+
+  db:
+    # Database
+    image: postgres
+    restart: always
+    container_name: "database"
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: friendify-dev
+    ports:
+      - 5555:5432
+    volumes:
+      - ../docker/postgres:/var/lib/postgresql
+
+  redis:
+    # Cache
+    image: redis
+    restart: always
+    container_name: "redis"
+    ports:
+      - 6868:6379
+
+  queue:
+    image: rabbitmq:3-management
+    restart: always
+    container_name: "queue"
+    ports:
+      - 8888:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabit
+      - RABBITMQ_DEFAULT_PASS=bitra
