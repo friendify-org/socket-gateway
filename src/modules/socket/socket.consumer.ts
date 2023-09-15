@@ -20,7 +20,6 @@ import { AuthGuard } from 'src/guard/auth';
 
 @Controller()
 export class SocketConsumer {
-
   @MessagePattern('socket_emit')
   @MessageException()
   async emitSocketEvent(@Payload() data: EmitSocketEvent) {
