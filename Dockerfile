@@ -3,15 +3,14 @@ FROM node:16
 WORKDIR /usr/app
 
 COPY package*.json .
-COPY yarn* .
 
 # Install all Nodejs dependency
-RUN yarn
+RUN npm install
 
 COPY . .
 
 # Build source
-RUN yarn build 
+RUN npm run build
 
 # ENTRYPOINT [ "/usr/app/runner.sh" ]
 CMD [ "/usr/app/runner.sh" ]
